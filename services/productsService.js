@@ -7,8 +7,14 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => {
     console.log('Service: getProductById');
-    id = parseInt(id);
-    return await productsRepository.getProductById(id);
+    if (typeof id != "number") {
+        id = parseInt(id);
+    }
+    let product = await productsRepository.getProductById(id);
+    if (product.length === 0) {
+        product[0] = "Invalid product id";
+    }
+    return product;
 }
 
 module.exports.getAllProducts = getAllProducts;
